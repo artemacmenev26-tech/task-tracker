@@ -2,6 +2,8 @@ const taskInput = document.querySelector('#taskInput');
 const addButton = document.querySelector('#addButton');
 const taskList = document.querySelector('#taskList');
 
+const taskCount = document.querySelector('#taskCount');
+
 function loadTasks() {
     try {
         return JSON.parse(localStorage.getItem('tasks')) || [];
@@ -16,6 +18,15 @@ function saveTasks() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
+function updateTaskCount() {
+    const incompleteTasks = tasks.filter((task) => {
+        return task.completed === false;
+    });
+    taskCount.textContent = 'Осталось задач: ' + incompleteTasks.length;
+}
+
+
+
 function createTask(task) {
     const listItem = document.createElement('li');
     listItem.textContent = task.text;
@@ -28,6 +39,7 @@ function createTask(task) {
         task.completed = !task.completed;
         listItem.classList.toggle('completed');
         saveTasks();
+        updateTaskCount();
     });
 
     const deleteButton = document.createElement('button');
@@ -42,6 +54,7 @@ function createTask(task) {
 
         listItem.remove();
         saveTasks();
+        updateTaskCount();
     });
 
     listItem.append(deleteButton);
@@ -51,6 +64,8 @@ function createTask(task) {
 tasks.forEach((task) => {
     createTask(task);
 });
+
+updateTaskCount();
 
 addButton.addEventListener('click', () => {
     const taskText = taskInput.value.trim();
@@ -65,6 +80,7 @@ addButton.addEventListener('click', () => {
         tasks.push(task); 
         createTask(task);
         saveTasks();
+        updateTaskCount();
 
         taskInput.value = '';
         taskInput.focus();
