@@ -21,6 +21,11 @@
 
         <p class="hint">Нажмите на задачу, чтобы отметить её выполненной.</p>
         <p id="taskCount">Осталось задач: 0</p>
+        <div class="filters">
+            <button class="filter-button active" data-filter="all">Все</button>
+            <button class="filter-button" data-filter="active">Активные</button>
+            <button class="filter-button" data-filter="completed">Выполненные</button>
+        </div>
         <ul id="taskList" aria-live="polite"></ul>
     </main>
     <script src="script.js"></script>

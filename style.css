@@ -147,3 +147,25 @@ li button:hover {
         flex-direction: column;
     }
 }
+
+.filters {
+    justify-content: center;
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.filter-button {
+    padding: 8px 12px;
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    color: #374151;
+    cursor: pointer;
+}
+
+.filter-button.active {
+    background-color: #2563eb;
+    border-color: #2563eb;
+    color: white;
+}

@@ -4,6 +4,38 @@ const taskList = document.querySelector('#taskList');
 
 const taskCount = document.querySelector('#taskCount');
 
+const filterButtons = document.querySelectorAll('.filter-button');
+
+let currentFilter = 'all';
+
+function renderTasks(){
+    taskList.textContent = '';
+    let filteredTasks = tasks;
+    if (currentFilter === 'active') {
+        filteredTasks = tasks.filter((task) => {
+            return task.completed === false;
+        });
+    } else if (currentFilter === 'completed') {
+        filteredTasks = tasks.filter((task) => {
+            return task.completed === true;
+        });
+    }
+    filteredTasks.forEach((task) => {
+        createTask(task);
+    });
+}
+
+filterButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+        filterButtons.forEach((filterButton) => {
+            filterButton.classList.remove('active');
+        });
+        button.classList.add('active');
+        currentFilter = button.dataset.filter;
+        renderTasks();
+    });
+});
+
 function loadTasks() {
     try {
         return JSON.parse(localStorage.getItem('tasks')) || [];
@@ -40,6 +72,7 @@ function createTask(task) {
         listItem.classList.toggle('completed');
         saveTasks();
         updateTaskCount();
+        renderTasks();
     });
 
     const deleteButton = document.createElement('button');
@@ -61,10 +94,7 @@ function createTask(task) {
     taskList.append(listItem);
 }
 
-tasks.forEach((task) => {
-    createTask(task);
-});
-
+renderTasks();
 updateTaskCount();
 
 addButton.addEventListener('click', () => {
@@ -78,7 +108,7 @@ addButton.addEventListener('click', () => {
         };
         
         tasks.push(task); 
-        createTask(task);
+        renderTasks();
         saveTasks();
         updateTaskCount();
 
