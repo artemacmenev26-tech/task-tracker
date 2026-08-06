@@ -75,6 +75,20 @@ function createTask(task) {
         renderTasks();
     });
 
+    const editButton = document.createElement('button');
+    editButton.classList.add('edit-button');
+    editButton.textContent = 'Редактировать';
+    editButton.addEventListener('click', (event) => {
+        event.stopPropagation();
+
+        const newText = prompt('Введите новый текст задачи:', task.text);
+        if (newText !== null && newText.trim() !== '') {
+            task.text = newText.trim();
+            saveTasks();
+            renderTasks();
+        }
+    });
+
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Удалить';
 
@@ -90,7 +104,7 @@ function createTask(task) {
         updateTaskCount();
     });
 
-    listItem.append(deleteButton);
+    listItem.append(editButton, deleteButton);
     taskList.append(listItem);
 }
 
