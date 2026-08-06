@@ -97,7 +97,6 @@ li {
     border-radius: 8px;
     cursor: pointer;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     text-align: left;
     overflow-wrap: anywhere;
@@ -168,4 +167,13 @@ li button:hover {
     background-color: #2563eb;
     border-color: #2563eb;
     color: white;
+}
+
+.edit-button {
+    background-color: #2563eb;
+    margin-left: auto;
+}
+
+.edit-button:hover {
+    background-color: #1d4ed8;
 }
