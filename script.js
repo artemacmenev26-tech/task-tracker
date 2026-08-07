@@ -6,24 +6,11 @@ const taskCount = document.querySelector('#taskCount');
 
 const filterButtons = document.querySelectorAll('.filter-button');
 
+const clearCompletedButton = document.querySelector('#clearCompletedButton');
+
 let currentFilter = 'all';
 
-function renderTasks(){
-    taskList.textContent = '';
-    let filteredTasks = tasks;
-    if (currentFilter === 'active') {
-        filteredTasks = tasks.filter((task) => {
-            return task.completed === false;
-        });
-    } else if (currentFilter === 'completed') {
-        filteredTasks = tasks.filter((task) => {
-            return task.completed === true;
-        });
-    }
-    filteredTasks.forEach((task) => {
-        createTask(task);
-    });
-}
+let tasks = loadTasks();
 
 filterButtons.forEach((button) => {
     button.addEventListener('click', () => {
@@ -36,6 +23,36 @@ filterButtons.forEach((button) => {
     });
 });
 
+function renderTasks(){
+    taskList.textContent = '';
+    updateClearCompletedButton();
+    let filteredTasks = tasks;
+    if (currentFilter === 'active') {
+        filteredTasks = tasks.filter((task) => {
+            return task.completed === false;
+        });
+    } else if (currentFilter === 'completed') {
+        filteredTasks = tasks.filter((task) => {
+            return task.completed === true;
+        });
+    }
+    if (filteredTasks.length === 0) {
+        const emptyMessage = document.createElement('li');
+        emptyMessage.classList.add('empty-message');
+        const emptyMessages = {
+            all: 'Задач пока нет',
+            active: 'Активных задач нет',
+            completed: 'Выполненных задач нет'
+        };
+        emptyMessage.textContent = emptyMessages[currentFilter];
+        taskList.append(emptyMessage);
+        return;
+    }
+    filteredTasks.forEach((task) => {
+        createTask(task);
+    });
+}
+
 function loadTasks() {
     try {
         return JSON.parse(localStorage.getItem('tasks')) || [];
@@ -43,8 +60,6 @@ function loadTasks() {
         return [];
     }
 }
-
-let tasks = loadTasks();
 
 function saveTasks() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -57,7 +72,12 @@ function updateTaskCount() {
     taskCount.textContent = 'Осталось задач: ' + incompleteTasks.length;
 }
 
-
+function updateClearCompletedButton() {
+    const hasCompletedTasks = tasks.some((task) => {
+        return task.completed === true;
+    });
+    clearCompletedButton.disabled = !hasCompletedTasks;
+}
 
 function createTask(task) {
     const listItem = document.createElement('li');
@@ -99,9 +119,9 @@ function createTask(task) {
             return currentTask.id !== task.id;
         });
 
-        listItem.remove();
         saveTasks();
         updateTaskCount();
+        renderTasks();
     });
 
     listItem.append(editButton, deleteButton);
@@ -129,6 +149,19 @@ addButton.addEventListener('click', () => {
         taskInput.value = '';
         taskInput.focus();
     }
+});
+
+clearCompletedButton.addEventListener('click', () => {
+    const shouldClear = confirm('Удалить все выполненные задачи?');
+    if (!shouldClear) {
+        return;
+    }
+    tasks = tasks.filter((task) => {
+        return task.completed === false;
+    });
+    saveTasks();
+    updateTaskCount();
+    renderTasks();
 });
 
 taskInput.addEventListener('keydown', (event) => {

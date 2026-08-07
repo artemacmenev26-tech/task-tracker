@@ -177,3 +177,29 @@ li button:hover {
 .edit-button:hover {
     background-color: #1d4ed8;
 }
+
+.empty-message {
+    justify-content: center;
+    color: #9ca3af;
+    cursor: default;
+}
+
+.clear-completed-button {
+    display: block;
+    margin: 0 auto 16px;
+    background-color: white;
+    color: #b91c1c;
+    border: 1px solid #b91c1c;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.clear-completed-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.clear-completed-button:hover:not(:disabled) {
+    background-color: #fef2f2;
+}
