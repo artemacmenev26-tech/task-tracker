@@ -55,7 +55,11 @@ function renderTasks(){
 
 function loadTasks() {
     try {
-        return JSON.parse(localStorage.getItem('tasks')) || [];
+        const savedTasks = JSON.parse(localStorage.getItem('tasks'));
+        if (Array.isArray(savedTasks)) {
+            return savedTasks;
+        }
+        return [];
     } catch {
         return [];
     }
@@ -81,7 +85,10 @@ function updateClearCompletedButton() {
 
 function createTask(task) {
     const listItem = document.createElement('li');
-    listItem.textContent = task.text;
+    const taskTextElement = document.createElement('span');
+
+    taskTextElement.classList.add('task-text');
+    taskTextElement.textContent = task.text;
 
     if (task.completed){
         listItem.classList.add('completed');
@@ -124,7 +131,7 @@ function createTask(task) {
         renderTasks();
     });
 
-    listItem.append(editButton, deleteButton);
+    listItem.append(taskTextElement, editButton, deleteButton);
     taskList.append(listItem);
 }
 
