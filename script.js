@@ -16,8 +16,10 @@ filterButtons.forEach((button) => {
     button.addEventListener('click', () => {
         filterButtons.forEach((filterButton) => {
             filterButton.classList.remove('active');
+            filterButton.setAttribute('aria-pressed', 'false');
         });
         button.classList.add('active');
+        button.setAttribute('aria-pressed', 'true');
         currentFilter = button.dataset.filter;
         renderTasks();
     });
@@ -89,6 +91,9 @@ function createTask(task) {
 
     taskTextElement.classList.add('task-text');
     taskTextElement.textContent = task.text;
+    taskTextElement.tabIndex = 0;
+    taskTextElement.setAttribute('role', 'checkbox');
+    taskTextElement.setAttribute('aria-checked', task.completed);
 
     if (task.completed){
         listItem.classList.add('completed');
@@ -100,6 +105,13 @@ function createTask(task) {
         saveTasks();
         updateTaskCount();
         renderTasks();
+    });
+
+    taskTextElement.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            listItem.click();
+        }
     });
 
     const editButton = document.createElement('button');
