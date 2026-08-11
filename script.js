@@ -1,5 +1,5 @@
 const taskInput = document.querySelector('#taskInput');
-const addButton = document.querySelector('#addButton');
+const taskForm = document.querySelector('.task-form');
 const taskList = document.querySelector('#taskList');
 
 const taskCount = document.querySelector('#taskCount');
@@ -150,7 +150,8 @@ function createTask(task) {
 renderTasks();
 updateTaskCount();
 
-addButton.addEventListener('click', () => {
+taskForm.addEventListener('submit', (event) => {
+    event.preventDefault();
     const taskText = taskInput.value.trim();
 
     if (taskText !== ''){
@@ -181,10 +182,4 @@ clearCompletedButton.addEventListener('click', () => {
     saveTasks();
     updateTaskCount();
     renderTasks();
-});
-
-taskInput.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-        addButton.click();
-    }
 });
