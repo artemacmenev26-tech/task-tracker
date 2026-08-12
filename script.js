@@ -1,4 +1,5 @@
 const taskInput = document.querySelector('#taskInput');
+const taskSearchInput = document.querySelector('#taskSearchInput');
 const taskForm = document.querySelector('.task-form');
 const taskList = document.querySelector('#taskList');
 
@@ -9,6 +10,7 @@ const filterButtons = document.querySelectorAll('.filter-button');
 const clearCompletedButton = document.querySelector('#clearCompletedButton');
 
 let currentFilter = 'all';
+let searchQuery = '';
 
 let tasks = loadTasks();
 
@@ -25,6 +27,11 @@ filterButtons.forEach((button) => {
     });
 });
 
+taskSearchInput.addEventListener('input', (event) => {
+    searchQuery = event.target.value.trim().toLowerCase();
+    renderTasks();
+});
+
 function renderTasks(){
     taskList.textContent = '';
     updateClearCompletedButton();
@@ -38,6 +45,11 @@ function renderTasks(){
             return task.completed === true;
         });
     }
+    if (searchQuery !== '') {
+        filteredTasks = filteredTasks.filter((task) => {
+            return task.text.toLowerCase().includes(searchQuery);
+        });
+    }
     if (filteredTasks.length === 0) {
         const emptyMessage = document.createElement('li');
         emptyMessage.classList.add('empty-message');
@@ -46,7 +58,11 @@ function renderTasks(){
             active: 'Активных задач нет',
             completed: 'Выполненных задач нет'
         };
-        emptyMessage.textContent = emptyMessages[currentFilter];
+        if (searchQuery !== '') {
+            emptyMessage.textContent = 'По вашему запросу задач не найдено';
+        } else {
+            emptyMessage.textContent = emptyMessages[currentFilter];
+        }
         taskList.append(emptyMessage);
         return;
     }
