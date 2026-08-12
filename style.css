@@ -46,7 +46,7 @@ h1 {
     gap: 10px;
 }
 
-#taskInput {
+#taskInput, #taskSearchInput {
     min-width: 0;
     flex: 1;
     padding: 12px;
@@ -56,9 +56,17 @@ h1 {
     outline: none;
 }
 
-#taskInput:focus {
+#taskInput:focus, #taskSearchInput:focus {
     border-color: #2563eb;
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+#taskSearchInput {
+    width: 100%;
+}
+
+.task-search {
+    margin-top: 12px;
 }
 
 #addButton {
