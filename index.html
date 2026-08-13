@@ -9,20 +9,25 @@
 </head>
 <body>
     <main class="app">
-        <p class="eyebrow">Учебный проект</p>
         <h1>Трекер задач</h1>
         <p class="description">Добавляйте задачи, отмечайте выполненные и удаляйте ненужные.</p>
 
         <form class="task-form">
             <label class="visually-hidden" for="taskInput">Новая задача</label>
-            <input id="taskInput" type="text" placeholder="Например, изучить массивы" autocomplete="off">
+            <input id="taskInput" type="text" placeholder="Добавить задачу" autocomplete="off">
             <button id="addButton" type="submit">Добавить</button>
         </form>
         <div class="task-search">
             <label for="taskSearchInput" class="visually-hidden">Поиск задач</label>
             <input id="taskSearchInput" type="search" placeholder="Найти задачу" autocomplete="off">
         </div>
-
+        <div class="task-sorting">
+            <label for="taskSortSelect">Сортировка:</label>
+            <select id="taskSortSelect">
+                <option value="newest">Сначала новые</option>
+                <option value="oldest">Сначала старые</option>
+            </select>
+        </div>
         <p class="hint">Нажмите на задачу, чтобы отметить её выполненной.</p>
         <p id="taskCount">Осталось задач: 0</p>
         <div class="filters">
