@@ -116,8 +116,18 @@ function updateClearCompletedButton() {
 
 function createTask(task) {
     const listItem = document.createElement('li');
+    const taskContent = document.createElement('div');
+    const taskDateElement = document.createElement('span');
     const taskTextElement = document.createElement('span');
+    const createdDate = new Date(task.id);
+    const dateOptions = {
+        dateStyle: 'short',
+        timeStyle: 'short'
+    };
 
+    taskContent.classList.add('task-content');
+    taskDateElement.textContent = createdDate.toLocaleString('ru-RU', dateOptions);
+    taskDateElement.classList.add('task-date');
     taskTextElement.classList.add('task-text');
     taskTextElement.textContent = task.text;
     taskTextElement.tabIndex = 0;
@@ -172,7 +182,8 @@ function createTask(task) {
         renderTasks();
     });
 
-    listItem.append(taskTextElement, editButton, deleteButton);
+    taskContent.append(taskTextElement, taskDateElement);
+    listItem.append(taskContent, editButton, deleteButton);
     taskList.append(listItem);
 }
 
