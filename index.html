@@ -15,6 +15,12 @@
         <form class="task-form">
             <label class="visually-hidden" for="taskInput">Новая задача</label>
             <input id="taskInput" type="text" placeholder="Добавить задачу" autocomplete="off">
+            <label class="visually-hidden" for="taskPrioritySelect">Приоритет задачи</label>
+            <select id="taskPrioritySelect">
+                <option value="low">Низкий</option>
+                <option value="normal" selected>Обычный</option>
+                <option value="high">Высокий</option>
+            </select>
             <button id="addButton" type="submit">Добавить</button>
         </form>
         <div class="task-search">
