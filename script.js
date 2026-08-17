@@ -1,4 +1,5 @@
 const taskInput = document.querySelector('#taskInput');
+const taskPrioritySelect = document.querySelector('#taskPrioritySelect');
 const taskSearchInput = document.querySelector('#taskSearchInput');
 const taskSortSelect = document.querySelector('#taskSortSelect');
 const taskForm = document.querySelector('.task-form');
@@ -124,15 +125,29 @@ function createTask(task) {
         dateStyle: 'short',
         timeStyle: 'short'
     };
+    const taskHeader = document.createElement('div');
+    const taskPriorityElement = document.createElement('span');
+    const currentPriority = task.priority || 'normal';
+    const priorityLabels = {
+        low: 'Низкий',
+        normal: 'Обычный',
+        high: 'Высокий'
+    };
 
     taskContent.classList.add('task-content');
-    taskDateElement.textContent = createdDate.toLocaleString('ru-RU', dateOptions);
+    taskPriorityElement.classList.add(currentPriority);
+    taskPriorityElement.classList.add('task-priority');
+    taskHeader.classList.add('task-header');
     taskDateElement.classList.add('task-date');
     taskTextElement.classList.add('task-text');
+
+    taskDateElement.textContent = createdDate.toLocaleString('ru-RU', dateOptions);
     taskTextElement.textContent = task.text;
+    taskPriorityElement.textContent = priorityLabels[currentPriority];
     taskTextElement.tabIndex = 0;
     taskTextElement.setAttribute('role', 'checkbox');
     taskTextElement.setAttribute('aria-checked', task.completed);
+
 
     if (task.completed){
         listItem.classList.add('completed');
@@ -182,7 +197,8 @@ function createTask(task) {
         renderTasks();
     });
 
-    taskContent.append(taskTextElement, taskDateElement);
+    taskHeader.append(taskTextElement, taskPriorityElement);
+    taskContent.append(taskHeader, taskDateElement);
     listItem.append(taskContent, editButton, deleteButton);
     taskList.append(listItem);
 }
@@ -193,12 +209,14 @@ updateTaskCount();
 taskForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const taskText = taskInput.value.trim();
+    const taskPriority = taskPrioritySelect.value;
 
     if (taskText !== ''){
         const task = {
             id: Date.now(),
             text: taskText,
-            completed: false
+            completed: false,
+            priority: taskPriority
         };
         
         tasks.push(task); 
@@ -207,6 +225,7 @@ taskForm.addEventListener('submit', (event) => {
         updateTaskCount();
 
         taskInput.value = '';
+        taskPrioritySelect.value = 'normal';
         taskInput.focus();
     }
 });
