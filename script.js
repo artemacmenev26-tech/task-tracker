@@ -59,9 +59,20 @@ function renderTasks(){
         filteredTasks.sort((firstTask, secondTask) => {
             return secondTask.id - firstTask.id;
         });
-    } else {
+    } else if (sortOrder === 'oldest') {
         filteredTasks.sort((firstTask, secondTask) => {
             return firstTask.id - secondTask.id;
+        });
+    } else if (sortOrder === 'priority') {
+        const priorityOrder = {
+            low: 1,
+            normal: 2,
+            high: 3
+        };
+        filteredTasks.sort((firstTask, secondTask) => {
+            const firstPriority = firstTask.priority || 'normal';
+            const secondPriority = secondTask.priority || 'normal';
+            return priorityOrder[secondPriority] - priorityOrder[firstPriority];
         });
     }
     if (filteredTasks.length === 0) {
