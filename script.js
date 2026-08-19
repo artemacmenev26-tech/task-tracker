@@ -7,10 +7,12 @@ const taskList = document.querySelector('#taskList');
 const taskCount = document.querySelector('#taskCount');
 const filterButtons = document.querySelectorAll('.filter-button');
 const clearCompletedButton = document.querySelector('#clearCompletedButton');
+const taskPriorityFilterSelect = document.querySelector('#taskPriorityFilterSelect');
 
 let currentFilter = 'all';
 let searchQuery = '';
 let sortOrder = 'newest';
+let priorityFilter = 'all';
 
 let tasks = loadTasks();
 
@@ -37,6 +39,11 @@ taskSortSelect.addEventListener('change', (event) => {
     renderTasks();
 });
 
+taskPriorityFilterSelect.addEventListener('change', (event) => {
+    priorityFilter = event.target.value;
+    renderTasks();
+});
+
 function renderTasks(){
     taskList.textContent = '';
     updateClearCompletedButton();
@@ -48,6 +55,12 @@ function renderTasks(){
     } else if (currentFilter === 'completed') {
         filteredTasks = tasks.filter((task) => {
             return task.completed === true;
+        });
+    }
+    if (priorityFilter !== 'all') {
+        filteredTasks = filteredTasks.filter((task) => {
+            const currentPriority = task.priority || 'normal';
+            return currentPriority === priorityFilter;
         });
     }
     if (searchQuery !== '') {
@@ -85,6 +98,8 @@ function renderTasks(){
         };
         if (searchQuery !== '') {
             emptyMessage.textContent = 'По вашему запросу задач не найдено';
+        } else if (priorityFilter !== 'all') {
+            emptyMessage.textContent = 'Задач с таким приоритетом нет';
         } else {
             emptyMessage.textContent = emptyMessages[currentFilter];
         }
