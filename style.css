@@ -221,7 +221,7 @@ li button:hover {
     background-color: #fef2f2;
 }
 
-.task-sorting {
+.task-sorting, .task-priority-filter {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -229,7 +229,7 @@ li button:hover {
     margin-top: 12px;
 }
 
-#taskSortSelect, #taskPrioritySelect {
+#taskSortSelect, #taskPrioritySelect, #taskPriorityFilterSelect {
     padding: 8px 12px;
     border: 1px solid #d1d5db;
     border-radius: 8px;
@@ -239,7 +239,7 @@ li button:hover {
     outline: none;
 }
 
-#taskSortSelect:focus, #taskPrioritySelect:focus {
+#taskSortSelect:focus, #taskPrioritySelect:focus, #taskPriorityFilterSelect:focus {
     border-color: #2563eb;
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
