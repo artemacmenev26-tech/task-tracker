@@ -1,4 +1,5 @@
 const taskInput = document.querySelector('#taskInput');
+    const taskDeadlineInput = document.querySelector('#taskDeadlineInput');
 const taskPrioritySelect = document.querySelector('#taskPrioritySelect');
 const taskSearchInput = document.querySelector('#taskSearchInput');
 const taskSortSelect = document.querySelector('#taskSortSelect');
@@ -225,6 +226,13 @@ function createTask(task) {
 
     taskHeader.append(taskTextElement, taskPriorityElement);
     taskContent.append(taskHeader, taskDateElement);
+    if (task.deadline) {
+        const taskDeadlineElement = document.createElement('span');
+        taskDeadlineElement.classList.add('task-deadline');
+        const deadlineDate = new Date(task.deadline + 'T00:00:00');
+        taskDeadlineElement.textContent = 'Срок: ' + deadlineDate.toLocaleDateString('ru-RU');
+        taskContent.append(taskDeadlineElement);
+    }
     listItem.append(taskContent, editButton, deleteButton);
     taskList.append(listItem);
 }
@@ -236,13 +244,15 @@ taskForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const taskText = taskInput.value.trim();
     const taskPriority = taskPrioritySelect.value;
+    const taskDeadline = taskDeadlineInput.value;
 
     if (taskText !== ''){
         const task = {
             id: Date.now(),
             text: taskText,
             completed: false,
-            priority: taskPriority
+            priority: taskPriority,
+            deadline: taskDeadline
         };
         
         tasks.push(task); 
@@ -252,6 +262,7 @@ taskForm.addEventListener('submit', (event) => {
 
         taskInput.value = '';
         taskPrioritySelect.value = 'normal';
+        taskDeadlineInput.value = '';
         taskInput.focus();
     }
 });

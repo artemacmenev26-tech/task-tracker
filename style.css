@@ -229,7 +229,7 @@ li button:hover {
     margin-top: 12px;
 }
 
-#taskSortSelect, #taskPrioritySelect, #taskPriorityFilterSelect {
+#taskSortSelect, #taskPrioritySelect, #taskPriorityFilterSelect, #taskDeadlineInput {
     padding: 8px 12px;
     border: 1px solid #d1d5db;
     border-radius: 8px;
@@ -239,7 +239,7 @@ li button:hover {
     outline: none;
 }
 
-#taskSortSelect:focus, #taskPrioritySelect:focus, #taskPriorityFilterSelect:focus {
+#taskSortSelect:focus, #taskPrioritySelect:focus, #taskPriorityFilterSelect:focus, #taskDeadlineInput:focus {
     border-color: #2563eb;
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
@@ -291,4 +291,11 @@ li button:hover {
 .task-priority.high {
     background-color: #fee2e2;
     color: #991b1b;
+}
+
+.task-deadline {
+    font-size: 12px;
+    color: #2563eb;
+    font-weight: 600;
+    cursor: default;
 }
