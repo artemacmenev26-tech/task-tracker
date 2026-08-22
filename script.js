@@ -230,6 +230,12 @@ function createTask(task) {
         const taskDeadlineElement = document.createElement('span');
         taskDeadlineElement.classList.add('task-deadline');
         const deadlineDate = new Date(task.deadline + 'T00:00:00');
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const isOverdue = (deadlineDate < today && task.completed === false);
+        if (isOverdue) {
+            listItem.classList.add('overdue');
+        }
         taskDeadlineElement.textContent = 'Срок: ' + deadlineDate.toLocaleDateString('ru-RU');
         taskContent.append(taskDeadlineElement);
     }

@@ -299,3 +299,12 @@ li button:hover {
     font-weight: 600;
     cursor: default;
 }
+
+li.overdue {
+    background-color: #fef2f2;
+    border-color: #fca5a5;
+}
+
+li.overdue .task-deadline {
+    color: #b91c1c;
+}
